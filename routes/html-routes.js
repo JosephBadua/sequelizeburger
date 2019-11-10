@@ -22,15 +22,16 @@ module.exports = function(app) {
   });
 
   app.put("/burgers/update", function(req, res) {
-  db.burgers.update(req.body.id,
-    {
-      where: {
-        id: req.body.id
-      }
+    db.burgers.update({
+      devoured
+    }, {
+      where: { 
+        id: req.body.burger_id 
+      },
     })
     .then(function(results){
-     console.log(results);
-     res.redirect("/");
-    });
+      console.log(results);
+      res.redirect("/");
+     });
    });
 };
