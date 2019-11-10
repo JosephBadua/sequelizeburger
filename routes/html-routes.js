@@ -1,7 +1,7 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Load index page
+  // Load index page.
   app.get("/", function(req, res) {
       db.burgers.findAll({}).then(function(results){
         console.log(results);
