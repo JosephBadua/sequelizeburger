@@ -10,16 +10,27 @@ module.exports = function(app) {
   });
 
   // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
+  app.post("/burgers/create", function(req, res) {
+   db.burgers.create({
+     burger_name: req.body.burger_name,
+     devoured: false
+   })
+   .then(function(results){
+    console.log(results);
+    res.redirect("/");
+   });
   });
 
-  // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
-    res.render("404");
-  });
+  app.put("/burgers/update", function(req, res) {
+  db.burgers.update(req.body.id,
+    {
+      where: {
+        id: req.body.id
+      }
+    })
+    .then(function(results){
+     console.log(results);
+     res.redirect("/");
+    });
+   });
 };
