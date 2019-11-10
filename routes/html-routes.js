@@ -4,7 +4,7 @@ module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
       db.burgers.findAll({}).then(function(results){
-        console.log(results);
+        console.log(results.dataValues)
         res.render("index", {burgers: results});
       });
   });
@@ -16,22 +16,21 @@ module.exports = function(app) {
      devoured: false
    })
    .then(function(results){
-    console.log(results);
+    console.log(results.dataValues)
     res.redirect("/");
    });
   });
 
-  app.put("/burgers/update", function(req, res) {
+  app.put("/burgers/update?_method=PUT", function(req, res) {
     db.burgers.update({
-      devoured
-    }, {
-      where: { 
-        id: req.body.burger_id 
-      },
-    })
-    .then(function(results){
-      console.log(results);
-      res.redirect("/");
-     });
+      devoured: true,
+        where: {
+          id: req.body.burger_id
+        }
+      }).then(function(results) {
+        console.log(results.dataValues)
+        console.log(burgers);
+        res.redirect("/");
+    });
    });
 };
